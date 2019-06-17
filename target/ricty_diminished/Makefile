@@ -57,12 +57,13 @@ build: $(RD_CMP_FILES) $(RD_CMP_MONO_FILES) $(RDD_CMP_FILES) $(RDD_CMP_MONO_FILE
 install: $(RD_CMP_FILES) $(RD_CMP_MONO_FILES) $(RDD_CMP_FILES) $(RDD_CMP_MONO_FILES)
 	$(INSTALL_DATA) $(PATCHEDDIR)/*.ttf $(DESTDIR)
 
+# FIXME: release target move to parent Makefile
 ricty_diminished_nerd_font-$(TAG).tar.gz: $(RD_CMP_FILES) $(RD_CMP_MONO_FILES) $(RDD_CMP_FILES) $(RDD_CMP_MONO_FILES)
-	tar czf ricty_diminished_nerd_font-$(TAG).tar.gz -C $(PATCHEDDIR)/ .
+	tar --exclude .gitkeep -czf ricty_diminished_nerd_font-$(TAG).tar.gz -C $(PATCHEDDIR)/ .
 
 .PHONY: release
 release: ricty_diminished_nerd_font-$(TAG).tar.gz
-	hub release create -a ./ricty_diminished_nerd_font-$(TAG).tar.gz $(TAG)
+	hub release create -m "Release $(TAG) for Nerd fonts" -a ./ricty_diminished_nerd_font-$(TAG).tar.gz $(TAG)
 
 .PHONY: clean
 clean:
